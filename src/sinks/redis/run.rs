@@ -35,6 +35,8 @@ pub fn producer_loop(
 
         let result: Result<(), _> = redis::cmd("XADD")
             .arg(stream)
+            .arg("MAXLEN")
+            .arg("100")
             .arg("*")
             .arg(&[(key, json!(event).to_string())])
             .query(conn);
